@@ -15,7 +15,9 @@ public class HomePageTest extends TestBase{
 
 	LoginPage loginPage;
 	HomePage homePage;
-	String ab;
+	String neww;
+	String open;
+	
 
 	//initializing base class properties
 	public HomePageTest() {
