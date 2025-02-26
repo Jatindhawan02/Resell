@@ -1,0 +1,77 @@
+name: Bug / Task Report
+description: Report a bug or task with necessary details.
+title: "[BUG/TASK] "
+labels: []
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      description: Select whether this is a Bug or a Task.
+      options:
+        - Bug
+        - Task
+    validations:
+      required: true
+
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      description: Provide a short and clear title for the issue.
+      placeholder: "Enter issue title here"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Provide a detailed description of the issue.
+      placeholder: "Describe the issue or task in detail..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: Select the severity of the issue.
+      options:
+        - Critical
+        - High
+        - Medium
+        - Low
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: Select the priority level of the issue.
+      options:
+        - High
+        - Medium
+        - Low
+    validations:
+      required: true
+
+  - type: dropdown
+    id: status
+    attributes:
+      label: Status
+      description: Select the current status of this issue.
+      options:
+        - Open
+        - Assigned 
+        - In Progress
+        - Dev Fixed
+        - Test
+        - Closed
+        - Reopened
+        - Deferred
+        - Invalid
+        - Duplicate
+    validations:
+      required: true
