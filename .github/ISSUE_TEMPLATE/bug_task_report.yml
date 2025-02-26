@@ -1,6 +1,6 @@
 name: Bug / Task Report
 description: Report a bug or task with necessary details.
-title: 
+title: "Add a summary"
 labels: []
 body:
   - type: dropdown
