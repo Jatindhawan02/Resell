@@ -34,9 +34,9 @@ body:
       label: Priority
       description: Select the priority level.
       options:
-        - High
-        - Medium
-        - Low
+        - High Priority
+        - Medium Priority
+        - Low Priority
     validations:
       required: true
 
