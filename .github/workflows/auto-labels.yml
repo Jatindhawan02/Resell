@@ -13,10 +13,10 @@ jobs:
           actions: "add-labels"
           issue-number: ${{ github.event.issue.number }}
           labels: >
-            ${{ contains(github.event.issue.body, 'Severity: Critical') && 'Critical' || 
-                contains(github.event.issue.body, 'Severity: High') && 'High' || 
-                contains(github.event.issue.body, 'Severity: Medium') && 'Medium' || 
-                contains(github.event.issue.body, 'Severity: Low') && 'Low' || '' }},
+            ${{ contains(github.event.issue.body, 'Critical') && 'Critical' || 
+                contains(github.event.issue.body, 'High') && 'High' || 
+                contains(github.event.issue.body, 'Medium') && 'Medium' || 
+                contains(github.event.issue.body, 'Low') && 'Low' || '' }},
             ${{ contains(github.event.issue.body, 'Priority: High') && 'High Priority' || 
                 contains(github.event.issue.body, 'Priority: Medium') && 'Medium Priority' || 
                 contains(github.event.issue.body, 'Priority: Low') && 'Low Priority' || '' }},
