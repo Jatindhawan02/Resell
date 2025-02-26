@@ -12,23 +12,31 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const issueBody = context.payload.issue.body;
+            const issue = context.payload.issue;
+            const issueBody = issue.body;
             const labelsToAdd = new Set(["bug"]); // Default label
 
-            // Extract selected values
-            const severityMatch = issueBody.match(/Severity:\s*(.*)/);
-            const priorityMatch = issueBody.match(/Priority:\s*(.*)/);
-            const statusMatch = issueBody.match(/Status:\s*(.*)/);
+            // Extract selected values using better regex
+            const severityMatch = issueBody.match(/\*\*Severity\*\*\s*\n*(.*)/);
+            const priorityMatch = issueBody.match(/\*\*Priority\*\*\s*\n*(.*)/);
+            const statusMatch = issueBody.match(/\*\*Status\*\*\s*\n*(.*)/);
 
-            // Add labels dynamically
-            if (severityMatch) labelsToAdd.add(severityMatch[1].trim());
-            if (priorityMatch) labelsToAdd.add(priorityMatch[1].trim() + " Priority");
-            if (statusMatch) labelsToAdd.add(statusMatch[1].trim());
+            // Clean extracted values
+            const severity = severityMatch ? severityMatch[1].trim() : null;
+            const priority = priorityMatch ? priorityMatch[1].trim() + " Priority" : null;
+            const status = statusMatch ? statusMatch[1].trim() : null;
+
+            // Add valid labels
+            if (severity) labelsToAdd.add(severity);
+            if (priority) labelsToAdd.add(priority);
+            if (status) labelsToAdd.add(status);
+
+            console.log("Labels to add:", Array.from(labelsToAdd)); // Debugging
 
             // Apply labels to the issue
             github.rest.issues.addLabels({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.payload.issue.number,
+              issue_number: issue.number,
               labels: Array.from(labelsToAdd)
             });
