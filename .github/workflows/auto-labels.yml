@@ -13,19 +13,25 @@ jobs:
           actions: "add-labels"
           issue-number: ${{ github.event.issue.number }}
           labels: >
-            ${{ contains(github.event.issue.body, 'Critical') && 'Critical' || 
-                contains(github.event.issue.body, 'High') && 'High' || 
-                contains(github.event.issue.body, 'Medium') && 'Medium' || 
-                contains(github.event.issue.body, 'Low') && 'Low' || '' }},
-            ${{ contains(github.event.issue.body, 'Priority: High') && 'High Priority' || 
-                contains(github.event.issue.body, 'Priority: Medium') && 'Medium Priority' || 
-                contains(github.event.issue.body, 'Priority: Low') && 'Low Priority' || '' }},
-            ${{ contains(github.event.issue.body, 'Status: Open') && 'Open' || 
-                contains(github.event.issue.body, 'Status: In Progress') && 'In Progress' || 
-                contains(github.event.issue.body, 'Status: Dev Fixed') && 'Dev Fixed' || 
-                contains(github.event.issue.body, 'Status: Test') && 'Test' || 
-                contains(github.event.issue.body, 'Status: Closed') && 'Closed' || 
-                contains(github.event.issue.body, 'Status: Reopened') && 'Reopened' || 
-                contains(github.event.issue.body, 'Status: Deferred') && 'Deferred' || 
-                contains(github.event.issue.body, 'Status: Invalid') && 'Invalid' || 
-                contains(github.event.issue.body, 'Status: Duplicate') && 'Duplicate' || '' }}
+            ${{
+              (contains(github.event.issue.body, 'Severity: Critical') && 'Critical') || 
+              (contains(github.event.issue.body, 'Severity: High') && 'High') || 
+              (contains(github.event.issue.body, 'Severity: Medium') && 'Medium') || 
+              (contains(github.event.issue.body, 'Severity: Low') && 'Low') || ''
+            }},
+            ${{
+              (contains(github.event.issue.body, 'Priority: High') && 'High Priority') || 
+              (contains(github.event.issue.body, 'Priority: Medium') && 'Medium Priority') || 
+              (contains(github.event.issue.body, 'Priority: Low') && 'Low Priority') || ''
+            }},
+            ${{
+              (contains(github.event.issue.body, 'Status: Open') && 'Open') || 
+              (contains(github.event.issue.body, 'Status: In Progress') && 'In Progress') || 
+              (contains(github.event.issue.body, 'Status: Dev Fixed') && 'Dev Fixed') || 
+              (contains(github.event.issue.body, 'Status: Test') && 'Test') || 
+              (contains(github.event.issue.body, 'Status: Closed') && 'Closed') || 
+              (contains(github.event.issue.body, 'Status: Reopened') && 'Reopened') || 
+              (contains(github.event.issue.body, 'Status: Deferred') && 'Deferred') || 
+              (contains(github.event.issue.body, 'Status: Invalid') && 'Invalid') || 
+              (contains(github.event.issue.body, 'Status: Duplicate') && 'Duplicate') || ''
+            }}
