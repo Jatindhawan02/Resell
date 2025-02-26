@@ -1,6 +1,6 @@
 name: Bug / Task Report
 description: Report a bug or task with necessary details.
-title: "Add a summary"
+title: "[BUG/TASK] "  # This is the default GitHub title input
 labels: []
 body:
   - type: dropdown
@@ -11,15 +11,6 @@ body:
       options:
         - Bug
         - Task
-    validations:
-      required: true
-
-  - type: input
-    id: title
-    attributes:
-      label: Title
-      description: Provide a short and clear title for the issue.
-      placeholder: "Enter issue title here"
     validations:
       required: true
 
@@ -64,7 +55,6 @@ body:
       description: Select the current status of this issue.
       options:
         - Open
-        - Assigned 
         - In Progress
         - Dev Fixed
         - Test
