@@ -6,15 +6,6 @@ body:
     attributes:
       value: "### 🐞 Bug Report Form"
 
-  - type: dropdown
-    id: type
-    attributes:
-      label: Type
-      options:
-        - Bug
-    validations:
-      required: true
-
   - type: textarea
     id: description
     attributes:
