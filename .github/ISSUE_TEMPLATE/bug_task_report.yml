@@ -50,6 +50,7 @@ body:
         - In Progress
         - Dev Fixed
         - Test
+        - Retesting in progress
         - Closed
         - Reopened
         - Deferred
