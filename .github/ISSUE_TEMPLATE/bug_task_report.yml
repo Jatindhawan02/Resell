@@ -1,6 +1,6 @@
 name: Bug Report
 description: Report a bug with necessary details.
-labels: ["bug"]  # Default label
+labels: ["Bug"]  # Default label
 body:
   - type: markdown
     attributes:
