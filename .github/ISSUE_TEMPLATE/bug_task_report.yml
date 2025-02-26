@@ -1,6 +1,5 @@
 name: Bug / Task Report
 description: Report a bug or task with necessary details.
-title: ""  # This is the default GitHub title input
 labels: []
 body:
   - type: dropdown
