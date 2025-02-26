@@ -10,7 +10,6 @@ body:
     id: type
     attributes:
       label: Type
-      description: Bug (default)
       options:
         - Bug
     validations:
