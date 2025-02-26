@@ -2,7 +2,7 @@ const issue = context.payload.issue;
 const issueBody = issue.body;
 const labelsToAdd = new Set(["bug"]); // Default label
 
-// Debugging: Print full issue body to check formatting
+// Debugging Print full issue body to check formatting
 console.log("Issue Body:", issueBody);
 
 // Extract selected values using flexible regex
