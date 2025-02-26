@@ -29,3 +29,6 @@ github.rest.issues.addLabels({
   issue_number: issue.number,
   labels: Array.from(labelsToAdd)
 });
+
+// Debugging: Ensure this comment is not inside an object or function call
+console.log("Label application completed successfully!");
