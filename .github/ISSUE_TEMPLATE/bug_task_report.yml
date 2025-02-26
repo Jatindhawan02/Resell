@@ -1,15 +1,18 @@
-name: Bug / Task Report
-description: Report a bug or task with necessary details.
-labels: []
+name: Bug Report
+description: Report a bug with necessary details.
+labels: ["bug"]  # Default label
 body:
+  - type: markdown
+    attributes:
+      value: "### 🐞 Bug Report Form"
+
   - type: dropdown
     id: type
     attributes:
       label: Type
-      description: Select whether this is a Bug or a Task.
+      description: Bug (default)
       options:
         - Bug
-        - Task
     validations:
       required: true
 
@@ -17,8 +20,8 @@ body:
     id: description
     attributes:
       label: Description
-      description: Provide a detailed description of the issue.
-      placeholder: "Describe the issue or task in detail..."
+      description: Provide a detailed description of the bug.
+      placeholder: "Describe the issue in detail..."
     validations:
       required: true
 
@@ -39,7 +42,7 @@ body:
     id: priority
     attributes:
       label: Priority
-      description: Select the priority level of the issue.
+      description: Select the priority level.
       options:
         - High
         - Medium
