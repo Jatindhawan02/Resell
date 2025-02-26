@@ -1,42 +1,31 @@
-name: Auto Assign Labels
-on:
-  issues:
-    types: [opened, edited]
+const issue = context.payload.issue;
+const issueBody = issue.body;
+const labelsToAdd = new Set(["bug"]); // Default label
 
-jobs:
-  add-labels:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Assign Labels Based on Issue Content
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const issue = context.payload.issue;
-            const issueBody = issue.body;
-            const labelsToAdd = new Set(["bug"]); // Default label
+// Debugging: Print full issue body to check formatting
+console.log("Issue Body:", issueBody);
 
-            // Extract selected values using better regex
-            const severityMatch = issueBody.match(/\*\*Severity\*\*\s*\n*(.*)/);
-            const priorityMatch = issueBody.match(/\*\*Priority\*\*\s*\n*(.*)/);
-            const statusMatch = issueBody.match(/\*\*Status\*\*\s*\n*(.*)/);
+// Extract selected values using flexible regex
+const severityMatch = issueBody.match(/Severity[:\*\s]*\n*(.+)/i);
+const priorityMatch = issueBody.match(/Priority[:\*\s]*\n*(.+)/i);
+const statusMatch = issueBody.match(/Status[:\*\s]*\n*(.+)/i);
 
-            // Clean extracted values
-            const severity = severityMatch ? severityMatch[1].trim() : null;
-            const priority = priorityMatch ? priorityMatch[1].trim() + " Priority" : null;
-            const status = statusMatch ? statusMatch[1].trim() : null;
+// Clean extracted values
+const severity = severityMatch ? severityMatch[1].trim() : null;
+const priority = priorityMatch ? priorityMatch[1].trim() + " Priority" : null;
+const status = statusMatch ? statusMatch[1].trim() : null;
 
-            // Add valid labels
-            if (severity) labelsToAdd.add(severity);
-            if (priority) labelsToAdd.add(priority);
-            if (status) labelsToAdd.add(status);
+// Add valid labels
+if (severity) labelsToAdd.add(severity);
+if (priority) labelsToAdd.add(priority);
+if (status) labelsToAdd.add(status);
 
-            console.log("Labels to add:", Array.from(labelsToAdd)); // Debugging
+console.log("Labels to add:", Array.from(labelsToAdd)); // Debugging
 
-            // Apply labels to the issue
-            github.rest.issues.addLabels({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: issue.number,
-              labels: Array.from(labelsToAdd)
-            });
+// Apply labels to the issue
+github.rest.issues.addLabels({
+  owner: context.repo.owner,
+  repo: context.repo.repo,
+  issue_number: issue.number,
+  labels: Array.from(labelsToAdd)
+});
