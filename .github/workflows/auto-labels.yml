@@ -1,40 +1,31 @@
-const issue = context.payload.issue;
-const issueBody = issue.body;
-const labelsToAdd = new Set(["bug"]); // Default label
+name: Auto Assign Labels
+on:
+  issues:
+    types: [opened]
 
-// Debugging - Print full issue body to check formatting
-console.log("Issue Body:", issueBody);
-
-// Extract selected values using flexible regex
-const severityMatch = issueBody.match(/Severity[:*\s]*\n*(.+)/i);
-const priorityMatch = issueBody.match(/Priority[:*\s]*\n*(.+)/i);
-const statusMatch = issueBody.match(/Status[:*\s]*\n*(.+)/i);
-
-// Debugging - Check if regex matches correctly
-console.log("Severity Match:", severityMatch ? severityMatch[1] : "Not found");
-console.log("Priority Match:", priorityMatch ? priorityMatch[1] : "Not found");
-console.log("Status Match:", statusMatch ? statusMatch[1] : "Not found");
-
-// Clean extracted values, ensuring no null values
-const severity = severityMatch ? severityMatch[1].trim() : "";
-const priority = priorityMatch ? priorityMatch[1].trim() + " Priority" : "";
-const status = statusMatch ? statusMatch[1].trim() : "";
-
-// Add valid labels (only non-empty values)
-if (severity) labelsToAdd.add(severity);
-if (priority) labelsToAdd.add(priority);
-if (status) labelsToAdd.add(status);
-
-console.log("Labels to add:", Array.from(labelsToAdd)); // Debugging
-
-// Apply labels to the issue
-github.rest.issues.addLabels({
-  owner: context.repo.owner,
-  repo: context.repo.repo,
-  issue_number: issue.number,
-  labels: Array.from(labelsToAdd)
-}).then(() => {
-  console.log("Labels applied successfully!");
-}).catch((error) => {
-  console.error("Error applying labels:", error);
-});
+jobs:
+  add-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign Labels Based on Issue Content
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: "add-labels"
+          issue-number: ${{ github.event.issue.number }}
+          labels: >
+            ${{ contains(github.event.issue.body, 'Critical') && 'Critical' || 
+                contains(github.event.issue.body, 'High') && 'High' || 
+                contains(github.event.issue.body, 'Medium') && 'Medium' || 
+                contains(github.event.issue.body, 'Low') && 'Low' || '' }},
+            ${{ contains(github.event.issue.body, 'Priority: High') && 'High Priority' || 
+                contains(github.event.issue.body, 'Priority: Medium') && 'Medium Priority' || 
+                contains(github.event.issue.body, 'Priority: Low') && 'Low Priority' || '' }},
+            ${{ contains(github.event.issue.body, 'Status: Open') && 'Open' || 
+                contains(github.event.issue.body, 'Status: In Progress') && 'In Progress' || 
+                contains(github.event.issue.body, 'Status: Dev Fixed') && 'Dev Fixed' || 
+                contains(github.event.issue.body, 'Status: Test') && 'Test' || 
+                contains(github.event.issue.body, 'Status: Closed') && 'Closed' || 
+                contains(github.event.issue.body, 'Status: Reopened') && 'Reopened' || 
+                contains(github.event.issue.body, 'Status: Deferred') && 'Deferred' || 
+                contains(github.event.issue.body, 'Status: Invalid') && 'Invalid' || 
+                contains(github.event.issue.body, 'Status: Duplicate') && 'Duplicate' || '' }}
